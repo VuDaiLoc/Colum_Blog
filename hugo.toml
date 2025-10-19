@@ -1,0 +1,8 @@
+baseURL = "https://vudailoc.github.io/Colum_Blog/"
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+theme = "reimu"
+
+
+[params]
+avatar = "/avatar.webp"

@@ -1,0 +1,10 @@
+<div class="article-date">
+  <span
+    class="article-date-link icon-calendar"
+    data-aos="{{ .Site.Params.animation.options.article.date }}"
+  >
+    <time datetime="{{ .Date }}" itemprop="datePublished"
+      >{{ .Date.Format .Site.Params.dateFormat }}</time
+    >
+  </span>
+</div>
