@@ -1,0 +1,192 @@
+<style>
+  /* khung toàn bộ block chứng chỉ */
+  .cert-section {
+    background: rgba(0,0,0,0.15);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 1rem 1.25rem;
+    margin-top: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+
+  .cert-header {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    gap: .5rem;
+    margin-bottom: .75rem;
+  }
+
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .cert-item-btn {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: .9rem 1rem;
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--content-text-color, #fff);
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.4;
+  }
+  .cert-item-btn:hover {
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* modal overlay */
+  .cert-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1rem;
+  }
+
+  .cert-modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: #111;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    padding: 1rem;
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .cert-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 500;
+  }
+
+  .cert-close-btn {
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: .3rem .5rem;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .cert-close-btn:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .cert-modal-body img {
+    max-width: 80vw;
+    max-height: 70vh;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    object-fit: contain;
+  }
+</style>
+
+<section class="cert-block">
+  <h2 style="display:flex;align-items:center;gap:.5rem;font-size:1.25rem;font-weight:600;margin-bottom:.5rem;">
+    <span>🎓</span><span>Chứng chỉ</span>
+  </h2>
+  <div style="height:4px;background:linear-gradient(90deg,#4da6ff,#7b5cff,#ff4d6a);border-radius:999px;margin-bottom:1rem;"></div>
+
+  <div class="cert-section">
+    <div class="cert-header">
+      <span style="font-size:1rem;">📂</span>
+      <span>Danh sách chứng chỉ</span>
+    </div>
+
+    <div class="cert-list">
+      <button class="cert-item-btn" data-cert="networking">
+        <span>🌐</span>
+        <span>Networking Basics</span>
+      </button>
+
+      <button class="cert-item-btn" data-cert="js1">
+        <span>⚡</span>
+        <span>JavaScript Essentials 1</span>
+      </button>
+
+      <button class="cert-item-btn" data-cert="js2">
+        <span>☕</span>
+        <span>JavaScript Essentials 2</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Modal overlay -->
+<div class="cert-modal-backdrop" id="cert-modal">
+  <div class="cert-modal-content">
+    <div class="cert-modal-header">
+      <div id="cert-modal-title">Chứng chỉ</div>
+      <div class="cert-close-btn" id="cert-close">✕</div>
+    </div>
+    <div class="cert-modal-body">
+      <img id="cert-modal-img" src="" alt="certificate preview"/>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById('cert-modal');
+  const modalImg = document.getElementById('cert-modal-img');
+  const modalTitle = document.getElementById('cert-modal-title');
+  const closeBtn = document.getElementById('cert-close');
+
+  const mapping = {
+  networking: {
+    title: 'Networking Basics',
+    img: '/Colum_Blog/images2/Basic.webp'
+  },
+  js1: {
+    title: 'JavaScript Essentials 1',
+    img: '/Colum_Blog/images2/Java1.webp'
+  },
+  js2: {
+    title: 'JavaScript Essentials 2',
+    img: '/Colum_Blog/images2/Java2.webp'
+  }
+};
+
+
+  document.querySelectorAll('.cert-item-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-cert');
+      const info = mapping[key];
+      if (!info) return;
+      modalTitle.textContent = info.title;
+      modalImg.setAttribute('src', info.img);
+      modal.style.display = 'flex';
+    });
+  });
+
+  function closeModal() {
+    modal.style.display = 'none';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+})();
+</script>
